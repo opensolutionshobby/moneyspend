@@ -1,0 +1,12 @@
+{
+  "name": "moneyspend",
+  "version": "1.0.0",
+  "description": "LEVEL — shared expense settlement. Create an event, share the link, everyone adds what they spent.",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=23.4" },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  }
+}

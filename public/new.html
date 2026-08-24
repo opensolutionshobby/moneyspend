@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEVEL · new event</title>
+<link rel="stylesheet" href="/ds.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div class="app landing">
+  <header class="nav"><div class="nav-brand">LEVEL</div><a href="/recent">Recent</a></header>
+  <section class="landing-body">
+    <h1 class="landing-h">SPLIT WHAT<br>TONIGHT COST.</h1>
+    <p class="landing-p">
+      Start an event, send the link. Everyone adds their name and what they spent —
+      the bars level out and LEVEL says who pays whom.
+    </p>
+    <form class="landing-form" id="form">
+      <input class="input" id="name" maxlength="60" placeholder="FRIDAY THREE" aria-label="Event name">
+      <button class="btn btn-primary" id="go" type="submit">START AN EVENT</button>
+    </form>
+    <div class="rl landing-err" id="err" hidden></div>
+
+    <div class="landing-recent" id="recent-wrap" hidden>
+      <div class="rail-h-row">
+        <div class="rl rail-h">RECENT</div>
+        <a class="rl rail-more" href="/recent">SEE ALL</a>
+      </div>
+      <div class="recent-list" id="history"></div>
+    </div>
+  </section>
+</div>
+
+<script type="module">
+import { createEvent, recentIds, rememberVisit, fetchSummaries } from '/store.js';
+
+const $ = id => document.getElementById(id);
+
+$('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('go').disabled = true;
+  $('err').hidden = true;
+  try {
+    const ev = await createEvent($('name').value.trim() || 'TONIGHT');
+    rememberVisit(ev.id);
+    location.href = '/e/' + ev.id;
+  } catch (err) {
+    $('go').disabled = false;
+    $('err').textContent = 'COULD NOT START: ' + err.message;
+    $('err').hidden = false;
+  }
+});
+
+/* plain numbers, no currency: 500000 → "5000" */
+const money = c => { const n = Math.round(c) / 100; return Number.isInteger(n) ? String(n) : n.toFixed(2); };
+
+(async () => {
+  const ids = recentIds();
+  if (!ids.length) return;
+  try {
+    const { events } = await fetchSummaries(ids);
+    if (!events.length) return;
+    $('recent-wrap').hidden = false;
+    for (const ev of events) {
+      const a = document.createElement('a');
+      a.className = 'hist hist-link';
+      a.href = '/e/' + ev.id;
+      const left = document.createElement('div');
+      const label = document.createElement('div');
+      label.className = 'hist-label';
+      label.textContent = ev.name;
+      const meta = document.createElement('div');
+      meta.className = 'hist-meta';
+      meta.textContent = new Date(ev.createdAt).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })
+        + ' · ' + ev.people + (ev.people === 1 ? ' person' : ' people')
+        + (ev.settledAt ? ' · settled' : '');
+      left.append(label, meta);
+      const total = document.createElement('div');
+      total.className = 'hist-total';
+      total.textContent = money(ev.totalCents);
+      a.append(left, total);
+      $('history').append(a);
+    }
+  } catch (_) { /* the rail is a nicety; never block the landing on it */ }
+})();
+</script>
+</body>
+</html>

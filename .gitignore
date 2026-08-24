@@ -1,0 +1,5 @@
+node_modules/
+level.db
+level.db-shm
+level.db-wal
+out/

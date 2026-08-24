@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEVEL · recent</title>
+<link rel="stylesheet" href="/ds.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div class="app landing">
+  <header class="nav">
+    <a class="nav-brand" href="/">LEVEL</a>
+    <a href="/">New event</a>
+  </header>
+
+  <section class="rec-head">
+    <div>
+      <h1 class="rec-h">RECENT</h1>
+      <div class="rl rec-sub" id="sub">READING THIS BROWSER…</div>
+    </div>
+    <button class="btn btn-secondary" id="clear" type="button" hidden>CLEAR LIST</button>
+  </section>
+
+  <div class="rec-list" id="list"></div>
+
+  <p class="rec-note">
+    Every event you open is remembered here. The list is kept in this browser only —
+    it is never sent anywhere, so a different phone shows a different list.
+  </p>
+</div>
+
+<script type="module" src="/recent.js"></script>
+</body>
+</html>

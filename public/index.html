@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEVEL · split the bill</title>
+<link rel="stylesheet" href="/ds.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="nav">
+    <div class="nav-brand">LEVEL</div>
+    <a href="#who" aria-current="page">Tonight</a>
+    <a href="/recent">Recent</a>
+    <a href="/">New event</a>
+    <div class="conn" id="conn" title="live"><i></i><span id="conn-label">LIVE</span></div>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+
+  <main class="main">
+
+    <div class="rail">
+      <section class="share">
+        <div class="rl rail-h">THIS EVENT</div>
+        <input class="input ev-name" id="ev-name" maxlength="60" aria-label="Event name">
+        <div class="share-row">
+          <code class="share-url" id="share-url"></code>
+          <button class="btn btn-secondary share-copy" id="copy" type="button">COPY</button>
+        </div>
+        <div class="rl share-hint" id="who-count"></div>
+      </section>
+      <section class="recent" id="recent">
+        <div class="rail-h-row">
+          <div class="rl rail-h">RECENT</div>
+          <a class="rl rail-more" href="/recent">SEE ALL</a>
+        </div>
+        <div class="recent-list" id="history"></div>
+      </section>
+    </div>
+
+    <section class="entry" id="who">
+      <div class="rl">WHO PAID WHAT</div>
+      <div class="rows" id="rows"></div>
+      <button class="btn btn-ghost add" id="add" type="button">+ ADD PERSON</button>
+      <div class="totals">
+        <div class="tot">
+          <div class="rl">TOTAL</div>
+          <div class="tot-v" id="total">—</div>
+        </div>
+        <div class="tot">
+          <div class="rl">EACH</div>
+          <div class="tot-v tot-accent" id="share">—</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta">
+      <button class="btn btn-primary btn-block" id="cta" type="button">EQUALIZE</button>
+    </div>
+
+    <section class="chart">
+      <div class="chart-head">
+        <div class="rl" id="caption">SPEND VS FAIR SHARE</div>
+        <div class="rl chart-phase" id="phase">UNEVEN</div>
+      </div>
+      <div class="plot" id="plot">
+        <div class="bars" id="bars"></div>
+        <div class="shareline" id="shareline"></div>
+        <div class="chip" id="chip" hidden>
+          <div class="chip-slots">
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="chip-amt" id="chip-amt"></div>
+        </div>
+      </div>
+      <div class="axis" id="axis"></div>
+    </section>
+
+    <section class="result" id="result" hidden>
+      <div class="rl res-h"><span id="reshead">SEND THESE</span> · <span id="txcount"></span></div>
+      <div class="tx-list" id="txlist"></div>
+      <button class="btn btn-secondary btn-block res-save" id="save" type="button">MARK SETTLED</button>
+    </section>
+
+  </main>
+
+</div>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>
